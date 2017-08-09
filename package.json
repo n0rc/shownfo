@@ -1,0 +1,18 @@
+{
+  "name": "shownfo",
+  "version": "0.0.1",
+  "description": "small lib to convert nfo files from cp437 to utf8",
+  "main": "shownfo.js",
+  "dependencies": {
+    "iconv-lite": "^0.4.18"
+  },
+  "scripts": {
+      "build": "browserify --standalone shownfo shownfo.js | uglifyjs -o shownfo-bundle.js"
+  },
+  "repository": {
+      "type" : "git",
+      "url": "https://github.com/n0rc/shownfo.git"
+  },
+  "author": "cr0n",
+  "license": "MIT"
+}
