@@ -8,13 +8,14 @@ function shownfo(url, callback) {
                 callback('error: http ' + statusCode);
                 return;
             }
-            var ret = null;
+            var chunks = [];
             resp.on('data', function(chunk) {
-                ret = chunk;
+                chunks.push(chunk);
             });
             resp.on('end', function() {
-                if (ret !== null) {
-                    callback(iconv.encode(iconv.decode(ret, 'cp437'), 'utf8').toString())
+                if (chunks.length > 0) {
+                    var decoded = iconv.decode(Buffer.concat(chunks), 'cp437');
+                    callback(iconv.encode(decoded, 'utf8').toString());
                 } else {
                     callback('error: no data received');
                 }
