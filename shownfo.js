@@ -3,9 +3,9 @@ const iconv = require('iconv-lite');
 function shownfo(url, callback) {
     if (url.length > 0) {
         http.get(url, function(resp) {
-            const {statusCode} = resp;
+            const statusCode = resp.statusCode;
             if (statusCode !== 200) {
-                callback('error: http ' + statusCode);
+                callback('Error: HTTP ' + statusCode);
                 return;
             }
             var chunks = [];
@@ -17,12 +17,14 @@ function shownfo(url, callback) {
                     var decoded = iconv.decode(Buffer.concat(chunks), 'cp437');
                     callback(iconv.encode(decoded, 'utf8').toString());
                 } else {
-                    callback('error: no data received');
+                    callback('Error: No data received');
                 }
             });
+        }).on('error', function(error) {
+            callback(error);
         });
     } else {
-        callback('error: invalid url');
+        callback('Error: Invalid URL');
     }
 }
 module.exports = shownfo;
